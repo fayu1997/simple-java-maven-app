@@ -1,25 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.0-eclipse-temurin-11'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent any
+    //tools {nodejs "nodejs16.16.0"}
+    
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                bat 'mvn install'
             }
         }
-        stage('Test') { 
-            steps {
-                sh 'mvn test' 
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml' 
-                }
-            }
-        }
+       
+
     }
 }
